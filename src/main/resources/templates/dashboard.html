@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Center content on the page */
+        .dashboard-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .dashboard-box {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="dashboard-box text-center">
+        <h1 class="mb-4">Welcome to the Dashboard!</h1>
+        <p class="mb-4">You are logged in successfully, <span th:text="${#authentication.name}">User</span>.</p>
+
+        <!-- Logout button -->
+        <a th:href="@{/logout}" class="btn btn-danger mb-4">Logout</a>
+
+        <!-- Admin-specific section: View all users button -->
+        <sec:authorize access="hasRole('ADMIN')">
+            <h2 class="mb-3">Admin Actions</h2>
+            <button class="btn btn-primary" onclick="location.href='/api/users'">View All Users</button>
+        </sec:authorize>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

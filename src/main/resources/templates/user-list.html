@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Users</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Center content on the page */
+        .user-list-container {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .user-list-box {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="user-list-container">
+    <div class="user-list-box">
+        <h1 class="text-center mb-4">All Users</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">ID</td>
+                <td th:text="${user.username}">Username</td>
+                <td th:text="${user.email}">Email</td>
+                <td th:text="${user.role}">Role</td>
+                <td>
+                    <!-- View button -->
+                    <a class="btn btn-info btn-sm" th:href="@{'/api/users/' + ${user.id}}">View</a>
+                    <!-- Update button -->
+                    <a class="btn btn-primary btn-sm" th:href="@{'/api/users/edit/' + ${user.id}}">Update</a>
+                    <!-- Delete button -->
+                    <form th:action="@{'/api/users/' + ${user.id}}" method="post" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Button to go back to the dashboard -->
+        <div class="d-flex justify-content-center mt-4">
+            <a class="btn btn-secondary" th:href="@{/dashboard}">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
